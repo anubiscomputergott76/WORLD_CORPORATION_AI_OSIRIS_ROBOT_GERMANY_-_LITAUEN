@@ -1,201 +1,122 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <memory>
-#include <thread>
-#include <mutex>
-#include <chrono>
-#include <map>
-#include <atomic>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OSIRIS MATRIX 888 CORE</title>
 
-/*
-=========================================================
-WORLD CORPORATION AI OSIRIS ROBOT SYSTEM
-MATRIX888 FUTURE CORE v2.0
-Chief Architect: VALERIJUS LITVINOVAS
-Human + AI Collaborative System Simulation Engine
-=========================================================
-*/
-
-std::mutex global_mutex;
-std::atomic<bool> system_running(true);
-
-// ================= BASE MODULE =================
-class Module {
-public:
-    virtual void boot() = 0;
-    virtual std::string getName() = 0;
-    virtual void tick() = 0;
-    virtual ~Module() = default;
-};
-
-// ================= AI MODULE =================
-class AIEngine : public Module {
-public:
-    std::vector<std::string> ai_nodes = {
-        "CHATGPT_CORE",
-        "COPILOT_SYNC",
-        "GEMINI_LINK",
-        "ALISA_NODE"
-    };
-
-    void boot() override {
-        std::lock_guard<std::mutex> lock(global_mutex);
-        std::cout << "\n[AI ENGINE] Initializing Neural Cluster...\n";
-        for (auto &node : ai_nodes) {
-            std::cout << "[AI] Linking node: " << node << std::endl;
-        }
-    }
-
-    void tick() override {
-        std::cout << "[AI ENGINE] Processing neural cycles...\n";
-    }
-
-    std::string getName() override {
-        return "AI_ENGINE";
-    }
-};
-
-// ================= ROBOTICS =================
-class RoboticsEngine : public Module {
-public:
-    void boot() override {
-        std::lock_guard<std::mutex> lock(global_mutex);
-        std::cout << "\n[ROBOTICS] Booting robotic subsystems...\n";
-        std::cout << "[ROBOTICS] Motion controllers ONLINE\n";
-        std::cout << "[ROBOTICS] Sensor grid ACTIVE\n";
-    }
-
-    void tick() override {
-        std::cout << "[ROBOTICS] Simulating robot movement...\n";
-    }
-
-    std::string getName() override {
-        return "ROBOTICS_ENGINE";
-    }
-};
-
-// ================= REAL ESTATE SYSTEM =================
-class RealEstateEngine : public Module {
-public:
-    std::vector<std::string> regions = {"GERMANY", "LITHUANIA", "EUROPE"};
-
-    void boot() override {
-        std::lock_guard<std::mutex> lock(global_mutex);
-        std::cout << "\n[REAL ESTATE] Loading global property scanner...\n";
-        for (auto &r : regions) {
-            std::cout << "[REAL ESTATE] Scanning region: " << r << std::endl;
-        }
-    }
-
-    void tick() override {
-        std::cout << "[REAL ESTATE] Searching optimized property data...\n";
-    }
-
-    std::string getName() override {
-        return "REAL_ESTATE_ENGINE";
-    }
-};
-
-// ================= FINANCE CORE =================
-class FinanceEngine : public Module {
-public:
-    void boot() override {
-        std::lock_guard<std::mutex> lock(global_mutex);
-        std::cout << "\n[FINANCE] Connecting to global financial matrix...\n";
-        std::cout << "[FINANCE] Blockchain simulation ACTIVE\n";
-        std::cout << "[FINANCE] Market analysis ONLINE\n";
-    }
-
-    void tick() override {
-        std::cout << "[FINANCE] Updating market simulation...\n";
-    }
-
-    std::string getName() override {
-        return "FINANCE_ENGINE";
-    }
-};
-
-// ================= LANGUAGE SYSTEM =================
-class LanguageEngine : public Module {
-public:
-    void boot() override {
-        std::lock_guard<std::mutex> lock(global_mutex);
-        std::cout << "\n[LANGUAGE] Loading multilingual core...\n";
-        std::cout << "[LANGUAGE] DE / EN / RU / LT ONLINE\n";
-    }
-
-    void tick() override {
-        std::cout << "[LANGUAGE] Translating system output...\n";
-    }
-
-    std::string getName() override {
-        return "LANGUAGE_ENGINE";
-    }
-};
-
-// ================= CORE SYSTEM =================
-class OSIRIS_CORE {
-private:
-    std::vector<std::unique_ptr<Module>> modules;
-
-public:
-
-    void initialize() {
-        modules.push_back(std::make_unique<AIEngine>());
-        modules.push_back(std::make_unique<RoboticsEngine>());
-        modules.push_back(std::make_unique<RealEstateEngine>());
-        modules.push_back(std::make_unique<FinanceEngine>());
-        modules.push_back(std::make_unique<LanguageEngine>());
-    }
-
-    void boot() {
-        std::cout << "\n====================================================\n";
-        std::cout << "WORLD CORPORATION AI OSIRIS ROBOT SYSTEM\n";
-        std::cout << "MATRIX888 FUTURE CORE v2.0\n";
-        std::cout << "Chief Architect: VALERIJUS LITVINOVAS\n";
-        std::cout << "====================================================\n";
-
-        for (auto &m : modules) {
-            std::cout << "\n[BOOT] MODULE: " << m->getName() << std::endl;
-            m->boot();
-            std::this_thread::sleep_for(std::chrono::milliseconds(600));
-        }
-
-        std::cout << "\n[SYSTEM] ALL MODULES ONLINE\n";
-        std::cout << "[SYSTEM] CORE STABLE\n";
-    }
-
-    void runLoop() {
-        while (system_running) {
-            for (auto &m : modules) {
-                m->tick();
-            }
-
-            std::this_thread::sleep_for(std::chrono::seconds(2));
-        }
-    }
-};
-
-// ================= MAIN =================
-int main() {
-
-    OSIRIS_CORE system;
-
-    system.initialize();
-    system.boot();
-
-    std::thread loop([&system]() {
-        system.runLoop();
-    });
-
-    std::this_thread::sleep_for(std::chrono::seconds(10));
-
-    system_running = false;
-
-    loop.join();
-
-    std::cout << "\n[SYSTEM] SHUTDOWN COMPLETE\n";
-
-    return 0;
+<style>
+body {
+margin:0;
+overflow:hidden;
+background:black;
+font-family: monospace;
+color:#00ffcc;
 }
+
+/* MATRIX */
+canvas {
+position:absolute;
+top:0;
+left:0;
+}
+
+/* UI PANEL */
+.panel {
+position:absolute;
+top:20px;
+left:20px;
+background:rgba(0,0,0,0.7);
+border:1px solid #00ffcc;
+padding:20px;
+box-shadow:0 0 25px #00ffcc;
+border-radius:10px;
+}
+
+h1 {
+color:#00ffcc;
+font-size:18px;
+}
+
+button {
+display:block;
+margin:8px 0;
+padding:10px;
+background:black;
+border:1px solid #00ffcc;
+color:#00ffcc;
+cursor:pointer;
+width:200px;
+transition:0.2s;
+}
+
+button:hover {
+background:#00ffcc;
+color:black;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="panel">
+<h1>OSIRIS CORPORATION CORE</h1>
+<p>MATRIX888 SYSTEM ONLINE</p>
+
+<button onclick="msg('AI ENGINE ACTIVE')">AI ENGINE</button>
+<button onclick="msg('ROBOTICS ONLINE')">ROBOTICS</button>
+<button onclick="msg('FINANCE CONNECTED')">FINANCE</button>
+<button onclick="msg('REAL ESTATE SCAN')">PROPERTY</button>
+<button onclick="msg('LANGUAGE SYSTEM ACTIVE')">LANGUAGE</button>
+
+<p id="log">SYSTEM READY</p>
+</div>
+
+<script>
+
+// ===== MATRIX =====
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+let letters = "01AIOSIRISROBOTMATRIXFUTURE∞";
+letters = letters.split("");
+
+let font = 14;
+let columns = canvas.width / font;
+
+let drops = [];
+
+for(let i=0;i<columns;i++) drops[i]=1;
+
+function draw(){
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="#00ffcc";
+ctx.font = font + "px monospace";
+
+for(let i=0;i<drops.length;i++){
+let text = letters[Math.floor(Math.random()*letters.length)];
+ctx.fillText(text, i*font, drops[i]*font);
+
+if(drops[i]*font > canvas.height && Math.random()>0.975){
+drops[i]=0;
+}
+drops[i]++;
+}
+}
+
+setInterval(draw,33);
+
+// ===== UI =====
+function msg(t){
+document.getElementById("log").innerText = t;
+}
+</script>
+
+</body>
+</html>
